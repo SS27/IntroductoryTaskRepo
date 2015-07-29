@@ -1,12 +1,20 @@
 package com.spstanchev.introductorytask;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +22,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (alertDialog != null && alertDialog.isShowing())
+            alertDialog.dismiss();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +49,28 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onPressed(View view) {
+        changeBackground();
+        createAlertDialog();
+    }
+
+    private void createAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("The button was pressed!")
+                .setTitle("Button dialog")
+                .setNegativeButton("Close", null);
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void changeBackground() {
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rootRelativeLayout);
+        Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+        relativeLayout.setBackgroundColor(Color.rgb(red, green, blue));
     }
 }
