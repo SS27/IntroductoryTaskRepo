@@ -16,16 +16,13 @@ import java.util.Random;
  */
 public class RectangleView extends View {
 
-    // Class constants defining state of the thread
     private static final int DONE = 0;
     private static final int RUNNING = 1;
-
-    // Following declared static so we can access from the anonymous inner class
-    // running the animation loop.
     private static int mState;
     private Paint mPaintOne, mPaintTwo;
     private Random mRandomX1, mRandomY1, mRandomX2, mRandomY2;
     private float mX1 = 0.0f, mY1 = 0.0f, mX2 = 0.0f, mY2 = 300.0f;
+
     // Handlers to implement updates from the background thread to views
     // on the main UI
     private Handler handler1 = new Handler();
@@ -36,11 +33,11 @@ public class RectangleView extends View {
     public RectangleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // Set up the Paint objects that will control format of screen draws
-
         mPaintOne = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintOne.setColor(Color.BLUE);
         mPaintTwo = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintTwo.setColor(Color.RED);
+        //Create new random objects
         mRandomX1 = new Random();
         mRandomY1 = new Random();
         mRandomX2 = new Random();
@@ -54,8 +51,8 @@ public class RectangleView extends View {
                 while (mState == RUNNING) {
                     //make calculations for x and y
                     if (viewWidth != 0 && viewHeight != 0){
-                        mX1 = (float) mRandomX1.nextInt(viewWidth*3/4);
-                        mY1 = (float) mRandomY1.nextInt(viewHeight-viewWidth/8);
+                        mX1 = mRandomX1.nextInt(viewWidth*3/4);
+                        mY1 = mRandomY1.nextInt(viewHeight-viewWidth/8);
                     }
                     try {
                         Thread.sleep(1000);
@@ -77,8 +74,8 @@ public class RectangleView extends View {
                 while (mState == RUNNING) {
                     //make calculations for x and y
                     if (viewWidth != 0 && viewHeight != 0){
-                        mX2 = (float) mRandomX2.nextInt(viewWidth*3/4);
-                        mY2 = (float) mRandomY2.nextInt(viewHeight-viewWidth/8);
+                        mX2 = mRandomX2.nextInt(viewWidth*3/4);
+                        mY2 = mRandomY2.nextInt(viewHeight-viewWidth/8);
                     }
                     try {
                         Thread.sleep(1000);
